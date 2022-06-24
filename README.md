@@ -49,5 +49,5 @@ Entre semana: **6 - 9 PM**
 - **1/Jul dibujar figuritas en la consola**
 
 ```bash
-g++ -Wall -Wextra -Werror -c main.cpp -o main.o && ./main.exe
+g++ complejos.cpp -o complejos && ./complejos.exe
 ```
