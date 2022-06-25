@@ -50,4 +50,5 @@ Entre semana: **6 - 9 PM**
 
 ```bash
 g++ complejos.cpp -o complejos && ./complejos.exe
+g++ rectangulos.cpp -o rectangulos && ./rectangulos.exe
 ```

@@ -1,3 +1,32 @@
+/*
+  Los objetos tienen distintos comportamientos para una clase que para otra
+  % ejemplo:
+  Chef.cocinarPastel(Pastel) requiere preparar mezcla, hornear y decorar
+  Chef.cocinarCarne(Carne) hay que freir la carne, ponerle salsa y finas hierbas
+
+  * sobrecarga (overloading)
+  Sobrecarga es la capacidad de un lenguaje de programación, que permite nombrar con 
+  el mismo identificador diferentes variables u operaciones. En programación orientada 
+  a objetos la sobrecarga se refiere a la posibilidad de tener dos o más funciones con 
+  el mismo nombre pero funcionalidad diferente.
+  
+  % más fácil
+  La sobrecarga es la capacidad del lenguaje de llamar de la misma forma a los comportmaientos
+  
+  Chef.cocinar(Pastel) 
+  Chef.cocinar(Carne)
+  
+  es más facil de escrbir y C++ lo entiende perfectamente
+  
+  $ Se puede hacer sobrecarga cambiando el orden de los parametros, cantidad y tipo
+  
+  > El constructor tambien puede sobrecargarse, de hecho todo puede, menos el destructor
+  
+  los metodos sobrecargados pueden reescribirse por completo 
+  o pueden llamar a sus equivalentes de otros tipos
+  ! en tanto no sea el constructor
+*/
+
 #include<iostream>
 
 using namespace std;
@@ -9,10 +38,21 @@ class Complejo {
   
   // # este es un constructor
   // crea un numero complejo
-  Complejo(string _nombre, float _real, float _imaginaria) {
+  Complejo(float _real, float _imaginaria) {
     real = _real;
     imaginaria = _imaginaria;
+  }
+  
+  /*
+    > El constructor tambien puede sobrecargarse, de hecho todo puede, menos el destructor
+    
+    % La forma más rápida de sobrecargar es colocando valores iniciales a los parametros
+    colocando = cuando se definan estos
+  */
+  Complejo(string _nombre,float _real = 0, float _imaginaria = 0) {
     nombre = _nombre;
+    real = _real;
+    imaginaria = _imaginaria;
   }
   
   // # este es un destructor
@@ -22,58 +62,118 @@ class Complejo {
   }
   
   // # estos son metodos
-  
+  // muestra toda la info del numero complejo
   void status() {
     cout << nombre << " = " << real << " + " << imaginaria << "i\n";
   }
-  
-  // podemos hacer interactuar nuestros objetos unos con otros
-  void sumar(Complejo otro) { // otro por que en ingles acostumbramos llamarlo other
-    real += otro.real;
-    imaginaria += otro.imaginaria;
-  }
-  
+    
   // podemos retornar objetos 
   Complejo mas(Complejo otro) {
-    Complejo respuesta("", real + otro.real, imaginaria + otro.imaginaria);
-    return respuesta;
+    Complejo ans(
+      nombre + "+" + otro.nombre,
+      real + otro.real, 
+      imaginaria + otro.imaginaria);
+    return ans;
   }
   
-  Complejo menos(Complejo otro) {
-    Complejo respuesta("", real - otro.real, imaginaria - otro.imaginaria);
-    return respuesta;
+  // # esto es una sobrecarga
+  // el metodo mas() tiene 3 sobrecargas
+  
+  // se hace una sobrecarga escribiendo un metodo con distintos parametros
+  Complejo mas(float _real, float _imaginaria = 0) {
+    Complejo nuevo(_real, _imaginaria);
+    Complejo ans = mas(nuevo);
+    
+    return ans;
   }
+  
+  // se hace una sobrecarga escribiendo un metodo con distintos parametros
+  // Complejo mas(float otro) {
+  //   Complejo ans(real + otro, imaginaria);
+  //   return ans;
+  // }
+  
+  Complejo menos(Complejo otro) {
+    Complejo ans(
+      nombre + "-" + otro.nombre,
+      real - otro.real, 
+      imaginaria - otro.imaginaria
+    );
+    return ans;
+  }
+  
+  // esto es una sobrecarga
+  // el metodo menos() tiene 4 sobrecargas
+  Complejo menos(float re = 0, float im = 0) {
+    Complejo nuevo(re, im);
+    return menos(nuevo);
+  }
+  
+  Complejo menos(string s) {}
   
   Complejo por(Complejo otro) {
     // z = a + bi, w = c + di -> zw = ac - bd + (ad + bc)i
     float a = real, b = imaginaria,
           c = otro.real, d = otro.imaginaria;
     
-    Complejo respuesta("", a*c - b*d, a*d + b*c);
-    return respuesta;
+    Complejo ans(
+      nombre + "*" + otro.nombre,
+      a*c - b*d, 
+      a*d + b*c
+    );
+    return ans;
+  }
+  
+  Complejo por(float re, float im = 0) {
+    Complejo nuevo(re, im);
+    return por(nuevo);
+  }
+  
+  Complejo entre(Complejo otro) {
+    // z = a + bi, w = c + di
+    float a = real, b = imaginaria,
+          c = otro.real, d = otro.imaginaria;
+    
+    /* 
+      .      ac + bd + (bc - ad)i     ac + bd        bc - ad
+     .z/w = ---------------------- = --------- + i ----------- 
+      .           c² + d²             c² + d²        c² + d²
+    */
+    float denom = c * c + d * d; // (c² + d²)
+    
+    Complejo ans(
+      nombre + "+" + otro.nombre,
+      (a*c + b*d) / denom,
+      (b*c - a*d) / denom
+    );
+    return ans;
+  }
+
+  Complejo entre(float re, float im = 0) {
+    Complejo nuevo(re, im);
+    return entre(nuevo);
   }
 };
 
 int main(){
-  // estas son dos instancias
-  Complejo z("z", 3, 4), w("w", 5,-7); // z = 3 + 4i, w = 5 - 7i
+  // estas son cuatro instancias
+  Complejo z("z", 3, 4), w("w"); // z = 3 + 4i, w = 0 + 0i
   
-  z.status(); // estos son llamados a metodos
-  w.status(); // estos son llamados a metodos
+  Complejo q = z.menos(w); // z interactua con un objeto de clase "Complejo"
+  Complejo a = z.menos(5); // z interactua con un objeto de clase "float"
+  Complejo b = z.mas(7, 6); // z interactua con dos objetos de clase "float"
+  Complejo c = b.entre(10);
   
-  Complejo q = z.mas(w);
-  q.nombre = "q";
-  q.status();
+  a.nombre = "a";
+  b.nombre = "b";
+  c.nombre = "c";
   
-  Complejo p = z.menos(w);
-  p.nombre = "p";
-  p.status();
-  
-  z = p.por(q);
-  z.nombre = "z";
+  // estos son llamados a metodos
   z.status();
-  
-  // w = p.entre(z); // reto 
+  w.status();
+  q.status();
+  b.status();
+  c.status();
   
   return 0;
 }
