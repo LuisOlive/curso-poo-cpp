@@ -74,10 +74,25 @@ class Complejo {
     return mas(Complejo(re, im));
   }
   
+  /*
+    * Sobrecarga de operadores
+    
+    para sobrecargar operadores se coloca la palbra operator 
+    y el simbolo en lugar del nombre de un metodo
+    
+    ! con excepciones, los operadores solo aceptan un parametro
+  */
+  
   // para escribir operadores se usa el keyword operator
   Complejo operator + (Complejo otro) {
-    // recoemndacion es tener el algoritmo con un metodo en palabras
+    // recomendacion es tener el algoritmo con un metodo normal
     return mas(otro);
+  }
+  
+  // estos operadores pueden sobrecargarse también
+  Complejo operator + (float re) { // que solo se puede un parametro, solo puede cambiar el tipo
+    // recomendacion es tener el algoritmo con un metodo normal
+    return mas(re);
   }
   
   Complejo menos(Complejo otro) {
@@ -154,18 +169,19 @@ class Complejo {
   }
 
   // con excepcion del punto todos los ops. pueden sobrecargarse
+  // bool es un tipo que solo admite true = 1 = sí o false = 0 = no
   bool esMayorQue(Complejo otro) {
     return modulo() > otro.modulo();
   }
   
-  // # esto es la una sobrecarga de operador booleano
+  // # estas son sobrecargas de operador booleano
   // bool es un tipo de dato, que solo puede ser 0 o 1, puede sustituir por int
   bool operator > (Complejo otro) {
     return esMayorQue(otro);
   }
   
   bool esMenorQue(Complejo otro) {
-    return modulo() > otro.modulo();
+    return modulo() < otro.modulo();
   }
   
   bool operator < (Complejo otro) {
@@ -186,14 +202,14 @@ class Complejo {
   }
   
   // # mas operadores
-  // sobrecarga del paréntsis
+  // sobrecarga del paréntsis u operador de invocación
   void operator () (string nom, int x = 0) { 
     // con la gran ventaja de que el paréntesis está hecho para mucho paramteros
-    nombre = nom;
+    nombre = nom; // cambiar el nombre fue lo mejor que se me ocurrió
   }
   
   float operator [] (int i) {
-    cout << "no se que hacer con corchetes";
+    cout << "no se que hacer con corchetes\n";
     return 2.5;
   }
   
@@ -211,6 +227,8 @@ class Complejo {
     // más adelante vemos como hacer que el igual devuelva el nuevo resultado 
   }
   
+  // / -= *= /= 
+  
   // ++ requiere un prametro aunque no se utilize
   void operator ++ (int _) {
     real++;
@@ -219,10 +237,6 @@ class Complejo {
   
   void operator << (string mensaje) {
     cout << nombre << " dice: " << mensaje << endl;
-  }
-  
-  Complejo operator << (int lugares) {
-    return Complejo(real << lugares, imaginaria << lugares);
   }
   
   void operator >> (string cual) {
@@ -243,12 +257,13 @@ Complejo pow(Complejo z, float n) {
   la potencia de un complejo es 
   . z^n = r^n ∠ nφ
   */
+  
   float r = z.modulo(); 
   float phi = z.argumento();
  
   float nueva_r = pow(r, n);
   float nueva_phi = n * phi;
-  
+
   float re = nueva_r * cos(nueva_phi);
   float im = nueva_r * sin(nueva_phi);
   
@@ -256,64 +271,48 @@ Complejo pow(Complejo z, float n) {
 }
 
 Complejo sqrt(Complejo z) {
-  return pow(z, 0.5);
+  return pow(z, .5);
 }
 
-ostream& operator << (ostream& _cout, Complejo z) {
-  _cout << z.real << " + " << z.imaginaria << "i"; // expresion lineal
+Complejo operator + (float x, Complejo z) {
+  return z + x;
+}
+
+ostream& operator << (ostream& _cout,  Complejo z) {
+  _cout << z.real << " + " << z.imaginaria << "i";
   return _cout;
 }
 
 int main(){
   // estas son cuatro instancias
-  Complejo z("z", 3, 4), w("w", 3, 4); // z = 3 + 4i, w = 0 + 0i
+  Complejo a("a", 3,4), b("b", 5,-7), c("c",2,9), d("d", 3,-1), i("i", 0, 1);
   
-  Complejo q = z + w; // utilizando operadores sobrecargados
-  Complejo a = z - w + q; // utilizando operadores sobrecargados
-  Complejo b = z * w; // utilizando operadores sobrecargados
-  Complejo c = z / w; // utilizando operadores sobrecargados
-  Complejo d = pow(z, 2);
-  Complejo e = sqrt(z);
+  Complejo e = pow(a, 2);
+  Complejo f = sqrt(a);
   
-  a("a");
-  b("b");
-  q("q");
-  c("c");
-  d("d");
-  e("e");
+  Complejo g = 3 + a;
+  g("g");
+  
+  // g = c;
+  // a += c;
+  // b++;
+  
+  // a << "ingrese el valor real: ";
+  // a >> "real";
+  
+  cout << "Mi complejo a es " << a << endl;
   
   a.status();
-  a++;
-  a << "Ingrese la parte real de a";
-  a >> "real";
-  
-  a << "Ingrese la parte imaginaria de a";
-  a >> "imaginaria";
-  
-  cout << "el numero complejo a es " << a << endl;
-  
-  if(z == w) {
-    cout << "z es igual que w\n";
-  } else {
-    cout << "z no es igual que w\n";
-  }
-  // estos son llamados a metodos
-  z.status();
-  z.statusPolar();
-  w.status();
-  w.statusPolar();
-  q.status();
-  // q.statusPolar();
-  a.status();
-  // a.statusPolar();
   b.status();
-  // b.statusPolar();
-  c.status();
-  // c.statusPolar();
+  // c.status();
   // d.status();
-  // d.statusPolar();
-  // e.status();
-  // e.statusPolar();
+  g.status();
+  
+  if(a > b)
+    cout << "a es mayor que b\n";
+  else
+    cout << "a no es mayor que b\n";
+  
   
   return 0;
 }
