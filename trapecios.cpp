@@ -117,19 +117,14 @@ public:
     triaDer.altura = altura;
     
     // si se queda como 0,guarde ambas bases como el promedio
-    triaDer.base = baseTrianguloDerecho || (base - cresta) / 2;
-    
-    /*
-    triaDer.base = baseTrianguloDerecho || (base - cresta) / 2;
-    
-    es lo mismo que poner:
+    // ! incorrecto
+    // triaDer.base = baseTrianguloDerecho || (base - cresta) / 2;
     
     if(baseTrianguloDerecho == 0) {
       triaDer.base = (base - cresta) / 2;
     } else {
       triaDer.base = baseTrianguloDerecho;
     }
-    */
     
     triaIzq.base = base - cresta - triaDer.base;
   }
