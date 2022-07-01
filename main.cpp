@@ -1,41 +1,23 @@
-/*
-  * Constructores y destructores
-  
-  * En el constructor 
-  se asignan los valores iniciales del nuevo objeto. 
-  
-  * Un destructor  
-  es una función miembro especial llamadas automáticamente en la ejecución del programa, y por tanto no tienen por qué ser llamadas explícitamente por el programador.
-
-*/
 #include <iostream>
-#include <cstdlib>
+// primera regla,usar extencion .h
+// #include "Persona.h"
+// g++ main.cpp includes/**/* -o main && ./main.exe
+
+// convencion: guardar las consas en una carpeta includes
+#include "includes/constantesMatematicas.h"
+#include "includes/personas/Persona.h"
+
+#include "includes/figuras/Rectangulo.h"
+#include "includes/figuras/Cuadrado.h" // si pido el cuadrado, tengo disponible la clase rectangulo
 
 using namespace std;
 
-class Persona {
-public:
-  string nombre, email;
-  long telefono;
-  int edad;
+int main(){
+  Persona p("Luis", "luis@email.com", 21, 55785641);
   
-  Persona(string _nombre, string _email, int _edad, long _numeroTarjeta, long _telefono) {
-    nombre = _nombre;
-    email = _email;
-    edad = _edad;
-    telefono = _telefono;
-  }
+  p.status();
   
-  ~Persona() {
-    nombre = "";
-    telefono = 0;
-    edad = -1;
-  }
-};
-
-int main() {
-  cout << "Programa aadministrativo\n";
-  
+  cout << PI * 2 * RAD_2_DEG << endl;
   
   return 0;
 }
