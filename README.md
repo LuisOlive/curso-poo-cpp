@@ -1,5 +1,7 @@
 # curso-poo-cpp
 
+![](memoria.jpg)
+
 ## Horarios:
 
 Entre semana: **6 - 9 PM**
