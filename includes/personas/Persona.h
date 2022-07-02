@@ -6,10 +6,12 @@
 using namespace std;
 
 class Persona {
-private:
+protected:
   string _nombre, _email;
   long _numeroTelefonico;
   int _edad;
+  
+  friend class Doctor;
   
 public:
   bool estaHerida;

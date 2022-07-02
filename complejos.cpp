@@ -1,12 +1,3 @@
-/*
-  Sobrecarga de funciones clásicas
-  
-  Lo mismo que con los métodos, 
-  cambias los parametros y les dejas el nombre, el compilador lo va a entender
-  
-  sobrecarga de operadores
-*/
-
 #include<iostream>
 #include<cmath>
 

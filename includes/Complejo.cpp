@@ -19,7 +19,7 @@ Complejo::~Complejo() {// ~ es con alt 126
 
 float Complejo::modulo() {
   // pitagorazo de real e imaginaria
-  return sqrt(real * real + imaginaria * imaginaria);
+  return hypot(real, imaginaria);
 }
 
 float Complejo::argumento() {

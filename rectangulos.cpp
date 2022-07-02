@@ -15,7 +15,6 @@ int main() {
   cout << "\nDatos de su rectangulo:\n";
   r.status();
   
-  
   cout << "\nDatos de su cuadrado:\n";
   c.status();
   

@@ -12,6 +12,7 @@ Persona::Persona(const string nombre, const string email, const int edad, const 
 }
   
 Persona::~Persona() {
+  cout << _nombre << " ha muerto. QEPD\n";
   _nombre = "";
   _numeroTelefonico = 0;
   _edad = -1;
@@ -19,7 +20,7 @@ Persona::~Persona() {
 }
 
 void Persona::hablar(string mensaje) {
-  cout << _nombre << "dice : " << mensaje << endl;
+  cout << _nombre << " dice: " << mensaje << endl;
 }
 
 void Persona::status() {
